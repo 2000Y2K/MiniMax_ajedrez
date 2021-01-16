@@ -8,10 +8,6 @@
 ### Interfaz.  
 ### Elegir mejor movimiento.  
 
-# Código:
-
- ### Representación tablero.
-
 # Recursos:
 
 ## Tablero
