@@ -10,7 +10,7 @@
 
 # Código:
 
- ###Representación tablero.
+ ### Representación tablero.
 
 # Recursos:
 
