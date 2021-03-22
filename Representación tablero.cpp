@@ -50,228 +50,6 @@ void mostrarMatriz(vector<vector<int>> v){
     cout<<"]"<<endl;
 }
 
-vector<vector<int>> posiblesJugadasReyBlanca(vector<int> _estruc, int _i)
-{
-  vector<vector<int>> posibles(0); //vector que guarda todos los posibles
-
-    if (_estruc[_i-1] < 1) //casillero a la izquirda vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-1);
-      posibles.push_back(jugada);
-    }
-     if (_estruc[_i+1] < 1)//casillero a la derecha vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+1);
-      posibles.push_back(jugada);
-    }
-     if (_estruc[_i+9] < 1)//casillero a la derecha vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+9);
-      posibles.push_back(jugada);
-    }
-     if (_estruc[_i+11] < 1) //casillero a la derecha vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+11);
-      posibles.push_back(jugada);
-    }
-     if (_estruc[_i-11] < 1)//casillero a la derecha vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-11);
-      posibles.push_back(jugada);
-    }
-     if (_estruc[_i-9] < 1)//casillero a la derecha vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-1);
-      posibles.push_back(jugada);
-    }
-     if (_estruc[_i+10] < 1)//casillero adelante vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+10);
-      posibles.push_back(jugada);
-    }
-     if (_estruc[_i-10] < 1)//casillero atras vacio o negro
-    {
-      vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-10);
-      posibles.push_back(jugada);
-    }
-    return posibles; //devuelve lista con todos los posibles movimientos
-  }
-
-vector<vector<int>> posiblesJugadasDamaBlanca(vector<int> _estruc, int _i){
-    vector<vector<int>> res(0);
-    int a=1;
-
-    while(_estruc[_i+ 11*a]<1){
-        if(_estruc[_i+11*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 11*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 11*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-
-    while(_estruc[_i- 11*a]<1){
-        if(_estruc[_i- 11*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i- 11*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i- 11*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-    while(_estruc[_i + 9*a]<1){
-        if(_estruc[_i+ 9*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 9*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 9*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-    while(_estruc[_i- 9*a]<1){
-        if(_estruc[_i - 9*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i - 9*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i - 9*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-    while(_estruc[_i+a]<1){
-        if(_estruc[_i+a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-
-    while(_estruc[_i-a]<1){
-        if(_estruc[_i-a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i-a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i-a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-    while(_estruc[_i + 10*a]<1){
-        if(_estruc[_i+ 10*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 10*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 10*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-    while(_estruc[_i- 10*a]<1){
-        if(_estruc[_i - 10*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i - 10*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i - 10*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    return res;
-}
-
 vector<vector<int>> posiblesJugadasTorres(vector<int> _estruc, int _turno, int _index)
 {
   vector<vector<int>> res(0);
@@ -361,126 +139,19 @@ vector<vector<int>> posiblesJugadasTorres(vector<int> _estruc, int _turno, int _
   return res;
 }
 
-vector<vector<int>> posiblesJugadasAlfilBlanco(vector<int> _estruc, int _i){
+vector<vector<int>> posiblesJugadasDamas(vector<int> _estruc,int _turno, int _i){
     vector<vector<int>> res(0);
     int a=1;
 
-    while(_estruc[_i+ 11*a]<1){
-        if(_estruc[_i+11*a]<0){
+    while(_estruc[_i+ 11*a]*_turno < 1 && _estruc[_i+ 11*a]!=7){ //diagonal vacia o enemiga.
+        if(_estruc[_i+ 11*a] !=0){ //diagonal ocupada
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 11*a);
             res.push_back(jug);
             break;
         }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 11*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-
-    while(_estruc[_i- 11*a]<1){
-        if(_estruc[_i- 11*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i- 11*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i- 11*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-    while(_estruc[_i + 9*a]<1){
-        if(_estruc[_i+ 9*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 9*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 9*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    a=1;
-
-    while(_estruc[_i- 9*a]<1){
-        if(_estruc[_i - 9*a]<0){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i - 9*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i - 9*a);
-            res.push_back(jug);
-            a++;
-        }
-    }
-
-    return res;
-}
-
-
-vector<vector<int>> posiblesJugadasCaballoBlanco(vector<int> _estruc, int _i){
-    vector<vector<int>> res(0);
-    vector<int> cas(0);
-    cas.push_back(-21);
-    cas.push_back(-19);
-    cas.push_back(-12);
-    cas.push_back(-8);
-    cas.push_back(8);
-    cas.push_back(12);
-    cas.push_back(19);
-    cas.push_back(21);
-
-    for(int j=0; j<cas.size(); j++){
-        if(_estruc[_i+cas[j]]<1){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+cas[j]);
-            res.push_back(jug);
-        }
-    }
-
-    return res;
-}
-
-vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
-    vector<vector<int>> res(0);
-    int a=1;
-
-    while(_estruc[_i+ 11*a]>-1 && _estruc[_i+ 11*a]!=7){
-        if(_estruc[_i+ 11*a]>0 && _estruc[_i+ 11*a]!=7){
-            vector<int> jug;
-            jug.push_back(_i);
-            jug.push_back(_i+ 11*a);
-            res.push_back(jug);
-            break;
-        }
-        else{
+        else{ //diagonal vacia
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 11*a);
@@ -491,16 +162,15 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
 
     a=1;
 
-
-    while(_estruc[_i- 11*a]>-1 && _estruc[_i- 11*a]!=7){
-        if(_estruc[_i- 11*a]>0 && _estruc[_i- 11*a]!=7){
+    while(_estruc[_i- 11*a]*_turno < 1 && _estruc[_i- 11*a]!=7){ //diagonal vacia o enemiga.
+        if(_estruc[_i- 11*a] !=0){ //diagonal ocupada
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i- 11*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else{ //diagonal vacia
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i- 11*a);
@@ -511,15 +181,15 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
 
     a=1;
 
-    while(_estruc[_i+ 9*a]>-1 && _estruc[_i+ 9*a]!=7){
-        if(_estruc[_i+ 9*a]>0 && _estruc[_i+ 9*a]!=7){
+    while(_estruc[_i+ 9*a]*_turno < 1 && _estruc[_i+ 9*a]!=7){ //diagonal vacia o enemiga.
+        if(_estruc[_i+ 9*a] !=0){ //diagonal ocupada
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 9*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else{ //diagonal vacia
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 9*a);
@@ -530,15 +200,18 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
 
     a=1;
 
-    while(_estruc[_i- 9*a]>-1 && _estruc[_i- 9*a]!=7){
-        if(_estruc[_i- 9*a]>0 && _estruc[_i- 9*a]!=7){
+    while(_estruc[_i- 9*a]*_turno < 1 && _estruc[_i- 9*a]!=7) //diagonal vacia o enemiga
+    {
+        if(_estruc[_i- 9*a] != 0) //diagonal ocupada
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i - 9*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //diagonal vacia
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i - 9*a);
@@ -549,15 +222,17 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
 
     a=1;
 
-    while(_estruc[_i+ a]>-1 && _estruc[_i+ a]!=7){
-        if(_estruc[_i+ a]>0 && _estruc[_i+ a]!=7){
+    while(_estruc[_i+ a]*_turno < 1 && _estruc[_i+ a]!=7) //costado vacia o enemiga
+    {
+        if(_estruc[_i+ a] != 0) //costado ocupada
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+a);
             res.push_back(jug);
             break;
         }
-        else{
+        else{ //costado vacio
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+a);
@@ -568,16 +243,18 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
 
     a=1;
 
-
-    while(_estruc[_i- a]>-1 && _estruc[_i- a]!=7){
-        if(_estruc[_i- a]>0 && _estruc[_i- a]!=7){
+    while(_estruc[_i- a]*_turno < 1 && _estruc[_i- a]!=7)  //costado vacio o enemigo
+    {
+        if(_estruc[_i- a] !=0) //costado enemigo
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i-a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //costado vacio
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i-a);
@@ -588,15 +265,18 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
 
     a=1;
 
-    while(_estruc[_i+ 10*a]>-1 && _estruc[_i+ 10*a]!=7){
-        if(_estruc[_i+ 10*a]>0 && _estruc[_i+ 10*a]!=7){
+    while(_estruc[_i+ 10*a]*_turno < 1 && _estruc[_i+ 10*a]!=7) //adelante vacio o enemigo
+    {
+        if(_estruc[_i+ 10*a] != 0 ) //adelante ocupado
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 10*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //adelante vacio
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 10*a);
@@ -607,15 +287,18 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
 
     a=1;
 
-    while(_estruc[_i- 10*a]>-1 && _estruc[_i- 10*a]!=7){
-        if(_estruc[_i- 10*a]>0 && _estruc[_i- 10*a]!=7){
+    while(_estruc[_i- 10*a]*_turno < 1 && _estruc[_i- 10*a]!=7) //atras vacio o enemigo
+    {
+        if(_estruc[_i- 10*a] != 0) //atras enemigo
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i - 10*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //atras vacio
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i - 10*a);
@@ -627,19 +310,21 @@ vector<vector<int>> posiblesJugadasDamaNegra(vector<int> _estruc, int _i){
     return res;
 }
 
-vector<vector<int>> posiblesJugadasAlfilNegro(vector<int> _estruc, int _i){
+vector<vector<int>> posiblesJugadasAlfiles(vector<int> _estruc,int _turno, int _i){
     vector<vector<int>> res(0);
     int a=1;
 
-    while(_estruc[_i+ 11*a]>-1 && _estruc[_i+ 11*a]!=7){
-        if(_estruc[_i+ 11*a]>0 && _estruc[_i+ 11*a]!=7){
+    while(_estruc[_i+ 11*a]*_turno < 1 && _estruc[_i+ 11*a]!=7){ //diagonal vacia o enemiga
+        if(_estruc[_i+ 11*a] != 0) //diagonal ocupada
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 11*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //diagonal vacia
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 11*a);
@@ -650,16 +335,18 @@ vector<vector<int>> posiblesJugadasAlfilNegro(vector<int> _estruc, int _i){
 
     a=1;
 
-
-    while(_estruc[_i- 11*a]>-1 && _estruc[_i- 11*a]!=7){
-        if(_estruc[_i- 11*a]>0 && _estruc[_i- 11*a]!=7){
+    while(_estruc[_i- 11*a]*_turno < 1 && _estruc[_i- 11*a]!=7) //diagonal vacia o enemiga
+    {
+        if(_estruc[_i- 11*a] != 0) //diagonal ocupada
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i- 11*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //diagonal vacia
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i- 11*a);
@@ -670,15 +357,18 @@ vector<vector<int>> posiblesJugadasAlfilNegro(vector<int> _estruc, int _i){
 
     a=1;
 
-    while(_estruc[_i+ 9*a]>-1 && _estruc[_i+ 9*a]!=7){
-        if(_estruc[_i+ 9*a]>0 && _estruc[_i+ 9*a]!=7){
+    while(_estruc[_i+ 9*a]*_turno < 1 && _estruc[_i+ 9*a]!=7) // diagonal vacia o enemiga
+    {
+        if(_estruc[_i+ 9*a] != 0) //diagonal ocupada
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 9*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //diagonal vacia
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i+ 9*a);
@@ -689,15 +379,17 @@ vector<vector<int>> posiblesJugadasAlfilNegro(vector<int> _estruc, int _i){
 
     a=1;
 
-    while(_estruc[_i- 9*a]>-1 && _estruc[_i- 9*a]!=7){
-        if(_estruc[_i- 9*a]>0 && _estruc[_i- 9*a]!=7){
+    while(_estruc[_i- 9*a]*_turno < 1 && _estruc[_i- 9*a]!=7){ //diagonal vacia o enemiga
+        if(_estruc[_i- 9*a] != 0) //diagonal ocupada
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i - 9*a);
             res.push_back(jug);
             break;
         }
-        else{
+        else //diagonal vacia
+        {
             vector<int> jug;
             jug.push_back(_i);
             jug.push_back(_i - 9*a);
@@ -709,92 +401,84 @@ vector<vector<int>> posiblesJugadasAlfilNegro(vector<int> _estruc, int _i){
     return res;
 }
 
-vector<vector<int>> posiblesJugadasCaballoNegro(vector<int> _estruc, int _i){
+vector<vector<int>> posiblesJugadasCaballos(vector<int> _estruc,int _turno, int _i)
+{
     vector<vector<int>> res(0);
-    vector<int> cas(0);
-    cas.push_back(-21);
-    cas.push_back(-19);
-    cas.push_back(-12);
-    cas.push_back(-8);
-    cas.push_back(8);
-    cas.push_back(12);
-    cas.push_back(19);
-    cas.push_back(21);
+    vector<int> desplazamientos = {-21,-19,-12,-8,8,12,19,21};
 
-    for(int j=0; j<cas.size(); j++){
-        if(_estruc[_i+cas[j]]>-1 && _estruc[_i+cas[j]]<7){
+    for(int j=0; j<desplazamientos.size(); j++){
+        if(_estruc[_i+desplazamientos[j]]*_turno < 1 && _estruc[_i+desplazamientos[j]]<7){
             vector<int> jug;
             jug.push_back(_i);
-            jug.push_back(_i+cas[j]);
+            jug.push_back(_i+desplazamientos[j]);
             res.push_back(jug);
         }
     }
-
     return res;
 }
 
-vector<vector<int>> posiblesJugadasReyNegro(vector<int> _estruc, int _i)
+vector<vector<int>> posiblesJugadasReyes(vector<int> _estruc, int _turno, int _index)
 {
   vector<vector<int>> posibles(0); //vector que guarda todos los posibles
 
-    if (_estruc[_i-1] > -1 && _estruc[_i-1] < 7) //casillero a la izquirda vacio o negro
+    if (_estruc[_index-1]*_turno < 1 && _estruc[_index-1] < 7) //casillero a la izquirda vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-1);
+      jugada.push_back(_index);
+      jugada.push_back(_index-1);
       posibles.push_back(jugada);
     }
-     if (_estruc[_i+1] > -1 && _estruc[_i+1] < 7)//casillero a la derecha vacio o negro
+    if (_estruc[_index+1]*_turno < 1 && _estruc[_index+1] < 7)//casillero a la derecha vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+1);
+      jugada.push_back(_index);
+      jugada.push_back(_index+1);
       posibles.push_back(jugada);
     }
-     if (_estruc[_i+10] > -1 && _estruc[_i+10] < 7)//casillero adelante vacio o negro
+    if (_estruc[_index+10]*_turno < 1 && _estruc[_index+10] < 7)//casillero adelante vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+10);
+      jugada.push_back(_index);
+      jugada.push_back(_index+10);
       posibles.push_back(jugada);
     }
-     if (_estruc[_i+9] > -1 && _estruc[_i+9] < 7)//casillero a la derecha vacio o negro
+    if (_estruc[_index+9]*_turno < 1 && _estruc[_index+9] < 7)//casillero diagonal vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+9);
+      jugada.push_back(_index);
+      jugada.push_back(_index+9);
       posibles.push_back(jugada);
     }
-     if (_estruc[_i+11] > -1 && _estruc[_i+11] < 7)//casillero a la derecha vacio o negro
+    if (_estruc[_index+11]*_turno < 1 && _estruc[_index+11] < 7)//casillero diagonal vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i+11);
+      jugada.push_back(_index);
+      jugada.push_back(_index+11);
       posibles.push_back(jugada);
     }
-     if (_estruc[_i-11] > -1 && _estruc[_i-11] < 7)//casillero a la derecha vacio o negro
+    if (_estruc[_index-11]*_turno < 1 && _estruc[_index-11] < 7)//casillero diagonal vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-11);
+      jugada.push_back(_index);
+      jugada.push_back(_index-11);
       posibles.push_back(jugada);
     }
-     if (_estruc[_i-9] > -1 && _estruc[_i-9] < 7)//casillero a la derecha vacio o negro
+    if (_estruc[_index-9]*_turno < 1 && _estruc[_index-9] < 7)//casillero a la derecha vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-1);
+      jugada.push_back(_index);
+      jugada.push_back(_index-9);
       posibles.push_back(jugada);
     }
-     if (_estruc[_i-10] > -1 && _estruc[_i-10] < 7 )//casillero atras vacio o negro
+    if (_estruc[_index-10]*_turno < 1 && _estruc[_index-10] < 7 )//casillero atras vacio o enemigo
     {
       vector<int> jugada; //una posible jugada
-      jugada.push_back(_i);
-      jugada.push_back(_i-10);
+      jugada.push_back(_index);
+      jugada.push_back(_index-10);
       posibles.push_back(jugada);
     }
     return posibles; //devuelve lista con todos los posibles movimientos
-  }
+    }
 
 vector<vector<int>> posiblesJugadasPeon(vector<int> _estruc, int _turno, int _index)
 {
@@ -847,17 +531,18 @@ vector<vector<int>> posiblesJugadasCasilla(vector<int> _estruc, int _turno, int 
             res = posiblesJugadasPeon(_estruc, _turno, _i);
         }
         if(_estruc[_i]==3){
-            res=posiblesJugadasAlfilBlanco(_estruc, _i);
+            res=posiblesJugadasAlfiles(_estruc, _turno, _i);
         }
         if(_estruc[_i]==2){
-            res=posiblesJugadasCaballoBlanco(_estruc, _i);
+            //res=posiblesJugadasCaballoBlanco(_estruc, _i);
+            res=posiblesJugadasCaballos(_estruc, _turno, _i);
         }
         if(_estruc[_i]==5){
-            res=posiblesJugadasDamaBlanca(_estruc, _i);
+            res=posiblesJugadasDamas(_estruc, _turno, _i);
         }
         if(_estruc[_i] == 6)
         {
-          res=posiblesJugadasReyBlanca(_estruc, _i);
+          res=posiblesJugadasReyes(_estruc, _turno, _i);
         }
     }
 
@@ -869,16 +554,17 @@ vector<vector<int>> posiblesJugadasCasilla(vector<int> _estruc, int _turno, int 
             res = posiblesJugadasPeon(_estruc, _turno, _i);
         }
         if(_estruc[_i]==-3){
-            res=posiblesJugadasAlfilNegro(_estruc, _i);
+           res=posiblesJugadasAlfiles(_estruc, _turno, _i);
         }
         if(_estruc[_i]==-2){
-            res=posiblesJugadasCaballoNegro(_estruc, _i);
+            //res=posiblesJugadasCaballoNegro(_estruc, _i);
+            res=posiblesJugadasCaballos(_estruc, _turno, _i);
         }
         if(_estruc[_i]==-5){
-            res=posiblesJugadasDamaNegra(_estruc, _i);
+            res=posiblesJugadasDamas(_estruc, _turno, _i);
         }
         if (_estruc[_i]==-6){
-          res=posiblesJugadasReyNegro(_estruc, _i);
+          res=posiblesJugadasReyes(_estruc, _turno, _i);
         }
     }
 
@@ -902,7 +588,8 @@ vector<vector<int>> Tablero::jugadasPosibles(){
     return res;
 }
 
-void mostrarVector(vector<int> v){
+void mostrarVector(vector<int> v)  //imprime los movimientos posibles en terminal
+{
     cout<<"[";
     for(int i=0;i<v.size()-1;i=i+1){
         if(i%10 == 0) cout << endl;
@@ -1001,7 +688,7 @@ int main()
     Tablero inicial  = Tablero ({7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
                                 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
                                 7, 4, 2, 3, 5, 6, 3, 2, 4, 7,
-                                7, 0, 1, 1, 1, 1, 1, 1, 1, 7,
+                                7, 1, 1, 1, 1, 1, 1, 1, 1, 7,
                                 7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
                                 7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
                                 7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
