@@ -13,6 +13,7 @@ class Tablero{
     vector<int> Estructura;
     int Turno;
     vector<vector<int>> historial;
+    string enroques;
     Tablero(vector<int>, int,vector<vector<int>>);
     vector<vector<int>> jugadasPosibles();
     vector<vector<int>> jugadasPosiblesInvertida();
@@ -20,12 +21,16 @@ class Tablero{
     bool esJaquemate();
     void hacerMovimiento(vector<int>);
     int posRey();
+    bool amenaza(int);
+    bool enroqueLargo();
+    bool enroqueCorto();
 };
 
 Tablero::Tablero(vector<int> _estruc, int _turno,vector<vector<int>> _historial){
     Estructura= _estruc; // 0 a 119, 21 a 98 son tablero.
     Turno= _turno; // 1 juegan blancas, -1 juegan negras.
     historial = _historial; // historial de jugadas, empizas vacio.
+    enroques = "KQkq";
 };
 
 void mostrarMatriz(vector<vector<int>> v){
@@ -594,7 +599,7 @@ void mostrarVector(vector<int> v)  //imprime los movimientos posibles en termina
     for(int i=0;i<v.size()-1;i=i+1){
         if(i%10 == 0) cout << endl;
         cout<<v[i];
-        cout<<"  ";
+        cout<<"           ";
     }
     cout<<v[v.size()-1];
     cout<<"]"<<endl;
@@ -602,49 +607,141 @@ void mostrarVector(vector<int> v)  //imprime los movimientos posibles en termina
 
 void Tablero:: hacerMovimiento(vector<int> mov) // solamente ingresar movimientos validos.
 {
-  int casilleroI = mov[0]; //le asigna a casilleroInicial el valor de index de la casilla donde sale el movimiento
-  int casilleroL = mov[1]; //le asigna a casilleroLlegada el valor de index de la casilla donde llega el movimiento
-  Estructura[casilleroL] = Estructura[casilleroI]; //remplaza el valor del casillero Llegada por el de casiillero Inicial
-  Estructura[casilleroI] = 0; //remplaza valor de casillero inicial por 0,
+  if(mov[0]!=0){ //entra si no es enroque
+    int casilleroI;
+    int casilleroL;
+    casilleroI = mov[0];
+    casilleroL = mov[1];
+    Estructura[casilleroL] = Estructura[casilleroI]; //remplaza el valor del casillero Llegada por el de casiillero Inicial
+    Estructura[casilleroI] = 0; //remplaza valor de casillero inicial por 0,
+
+    if(Estructura[casilleroL]==6){ //saca los enroque blancos si se movio el rey
+    enroques.erase(enroques.find('K'));
+    enroques.erase(enroques.find('Q'));
+    }
+
+    if(Estructura[casilleroL]==4){ //saca los enroque blancos si se movieron las torres
+      if(casilleroI==28){
+          //cortoBlancas=false;
+      }
+      if(casilleroI==21){
+          //largoBlancas=false;
+      }
+    }
+
+    if(Estructura[casilleroL]==-6){ //saca enroques negros si se movio el rey
+    //cortoNegras=false;
+    //largoNegras=false;
+    }
+
+    if(Estructura[casilleroL]==-4){ //saca enroques blancos si se movieron las torres
+      if(casilleroI==98){
+          //cortoBlancas=false;
+      }
+      if(casilleroI==91){
+          //largoBlancas=false;
+      }
+    }
+  }
+  else{ //entra si es enroque
+      if(Turno==1 && mov[1]==0){ //enroque corto para blancas
+        Estructura[25]=0;
+        Estructura[26]=4;
+        Estructura[27]=6;
+        Estructura[28]=0;
+      }
+      if(Turno==1 && mov[1]==1){ //enroque largo para blancas
+        Estructura[25]=0;
+        Estructura[24]=4;
+        Estructura[23]=6;
+        Estructura[21]=0;
+      }
+      if(Turno==-1 && mov[1]==0){ //enroque corto para negras
+        Estructura[75]=0;
+        Estructura[76]=-4;
+        Estructura[77]=-6;
+        Estructura[78]=0;
+      }
+      if(Turno==1 && mov[1]==0){ //enroque largo para negras
+        Estructura[75]=0;
+        Estructura[74]=-4;
+        Estructura[73]=-6;
+        Estructura[71]=0;
+      }
+  }
+
   historial.push_back(mov); //agrega la jugada al historial
-  Turno = Turno * (-1); // cambia el turno por el siguiente
+  Turno = Turno * (-1);
 }
 
-int Tablero:: posRey()
-{
-  if (Turno == -1)
-  {
-    for (int i = 20;i<99;++i)
-    {
-      if (Estructura[i] == 6) return i;
+bool Tablero:: enroqueCorto(){
+    bool res=false;
+    if(Turno==1 &&
+        Estructura[25]==6 &&
+        Estructura[26]==0 &&
+        Estructura[27]==0 &&
+        Estructura[28]==5 &&
+        !amenaza(25) &&
+        !amenaza(26) &&
+        !amenaza(27) &&
+        enroques.find('K') != -1)
+        {
+        res=true;
     }
-  }
-  else
-  {
-    for (int y = 20;y < 99;++y)
-    {
-      if (Estructura[y] == -6) return y;
+    if(Turno==-1 &&
+        Estructura[75]==-6 &&
+        Estructura[76]==0 &&
+        Estructura[77]==0 &&
+        Estructura[78]==-5 &&
+        !amenaza(75) &&
+        !amenaza(76) &&
+        !amenaza(77) &&
+        enroques.find('k') != -1
+        ){
+        res=true;
     }
-  }
 }
 
-vector<vector<int>> Tablero::jugadasPosiblesInvertida(){
-    vector<vector<int>> res(0);
-    int i=21;
-    while(i>20 && i<99){
-        if(i%10 != 9 && i%10 != 0){
-            vector<vector<int>> a=posiblesJugadasCasilla(Estructura, -1*Turno, i);
-            int j=0;
-            while(j<a.size()){
-                res.push_back(a[j]);
-                j++;
-            }
+bool Tablero:: enroqueLargo(){
+    bool res=false;
+    if(Turno==1 &&
+        Estructura[25]==6 &&
+        Estructura[24]==0 &&
+        Estructura[23]==0 &&
+        Estructura[22]==0 &&
+        Estructura[21]==5 &&
+        !amenaza(25) &&
+        !amenaza(24) &&
+        !amenaza(23) &&
+        enroques.find('Q') != -1)
+        {
+        res=true;
+    }
+    if(Turno==-1 &&
+        Estructura[75]==-6 &&
+        Estructura[74]==0 &&
+        Estructura[73]==0 &&
+        Estructura[72]==0 &&
+        Estructura[71]==-5 &&
+        !amenaza(75) &&
+        !amenaza(76) &&
+        !amenaza(77) &&
+        enroques.find('q') != -1){
+        res=true;
+    }
+}
+
+bool Tablero:: amenaza(int a){
+    vector<vector<int>> jugadasPosible=jugadasPosibles();
+    bool res=false;
+    for(int i=0;i<jugadasPosible.size();i++){
+        if(jugadasPosible[i][1]==Estructura[a]){
+            res=true;
+            break;
         }
-        i++;
     }
     return res;
 }
-
 
 bool Tablero:: esJaque(){
     vector<vector<int>> jugadasPosible=jugadasPosibles();
@@ -680,7 +777,33 @@ vector<vector<int>> moValidos(Tablero tablero){
             res.push_back(jugadas[i]);
         }
     }
+    if (tablero.enroqueCorto())
+    {
+      res.push_back({0,0});
+    }
+    if (tablero.enroqueLargo())
+    {
+      res.push_back({0,0});
+    }
     return res;
+}
+
+int Tablero:: posRey()
+{
+  if (Turno == -1)
+  {
+    for (int i = 20;i<99;++i)
+    {
+      if (Estructura[i] == 6) return i;
+    }
+  }
+  else
+  {
+    for (int y = 20;y < 99;++y)
+    {
+      if (Estructura[y] == -6) return y;
+    }
+  }
 }
 
 int main()
@@ -729,6 +852,7 @@ int main()
       inicial.hacerMovimiento(jugada);
       mostrarVector(inicial.Estructura);
       mostrarMatriz(inicial.jugadasPosibles());
+      cout << inicial.enroques << endl;
     }
     return 0;
 }
