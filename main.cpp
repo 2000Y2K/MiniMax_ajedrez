@@ -8,11 +8,13 @@ using namespace std;
 
 class Tablero{
 
+
     public:
     vector<int> Estructura;
     int Turno;
     vector<vector<int>> historial;
     string enroques;
+    int contador;
     Tablero(vector<int>, int,vector<vector<int>>);
     vector<vector<int>> jugadasPosibles();
     vector<vector<int>> jugadasPosiblesInvertida();
@@ -30,6 +32,7 @@ Tablero::Tablero(vector<int> _estruc, int _turno,vector<vector<int>> _historial)
     Turno= _turno; // 1 juegan blancas, -1 juegan negras.
     historial = _historial; // historial de jugadas, empizas vacio.
     enroques = "KQkq";
+    contador = 0;
 };
 
 void mostrarMatriz(vector<vector<int>> v){
@@ -523,6 +526,7 @@ vector<vector<int>> posiblesJugadasPeon(vector<int> _estruc, int _turno, int _in
 }
 return res;
 }
+
 vector<vector<int>> posiblesJugadasCasilla(vector<int> _estruc, int _turno, int _i){
 
     vector<vector<int>> res(0);
@@ -592,6 +596,23 @@ vector<vector<int>> Tablero::jugadasPosibles(){
     return res;
 }
 
+vector<vector<int>> Tablero::jugadasPosiblesInvertida(){
+    vector<vector<int>> res(0);
+    int i=21;
+    while(i>20 && i<99){
+        if(i%10 != 9 && i%10 != 0){
+            vector<vector<int>> a=posiblesJugadasCasilla(Estructura, -1*Turno, i);
+            int j=0;
+            while(j<a.size()){
+                res.push_back(a[j]);
+                j++;
+            }
+        }
+        i++;
+    }
+    return res;
+}
+
 void mostrarVector(vector<int> v)  //imprime los movimientos posibles en terminal
 {
     cout<<"[";
@@ -611,34 +632,41 @@ void Tablero:: hacerMovimiento(vector<int> mov) // solamente ingresar movimiento
     int casilleroL;
     casilleroI = mov[0];
     casilleroL = mov[1];
+
+    if (Estructura[casilleroL] != 0 ||Estructura[casilleroI] == 1||Estructura[casilleroI] == -1)
+    { // si se mueve un peon o se come una pieza se resetea el contador
+      contador = 0;
+    }
+    else contador ++; // si no es asi se aumenta el contador
+
     Estructura[casilleroL] = Estructura[casilleroI]; //remplaza el valor del casillero Llegada por el de casiillero Inicial
     Estructura[casilleroI] = 0; //remplaza valor de casillero inicial por 0,
 
+
     if(Estructura[casilleroL]==6){ //saca los enroque blancos si se movio el rey
-    //enroques.erase(enroques.find('K'));
-    //enroques.erase(enroques.find('Q'));
+
     }
 
     if(Estructura[casilleroL]==4){ //saca los enroque blancos si se movieron las torres
       if(casilleroI==28){
-          //cortoBlancas=false;
+          if (enroques.find('K')) enroques.erase(enroques.find('K'));
       }
       if(casilleroI==21){
-          //largoBlancas=false;
+          if (enroques.find('Q')) enroques.erase(enroques.find('Q'));
       }
     }
 
     if(Estructura[casilleroL]==-6){ //saca enroques negros si se movio el rey
-    //cortoNegras=false;
-    //largoNegras=false;
+      if (enroques.find('k') < 4) enroques.erase(enroques.find('k'));
+      if (enroques.find('q') < 4) enroques.erase(enroques.find('q'));
     }
 
-    if(Estructura[casilleroL]==-4){ //saca enroques blancos si se movieron las torres
+    if(Estructura[casilleroL]==-4){ //saca enroques negros si se movieron las torres
       if(casilleroI==98){
-          //cortoBlancas=false;
+      if (enroques.find('k') < 4) enroques.erase(enroques.find('k'));
       }
       if(casilleroI==91){
-          //largoBlancas=false;
+      if (enroques.find('q') < 4) enroques.erase(enroques.find('q'));
       }
     }
   }
@@ -704,7 +732,6 @@ bool Tablero:: enroqueCorto(){
 
 bool Tablero:: enroqueLargo(){
     bool res=false;
-    cout << 98 << endl;
     if(Turno==1 &&
         Estructura[25]==6 &&
         Estructura[24]==0 &&
@@ -716,7 +743,6 @@ bool Tablero:: enroqueLargo(){
         !amenaza(23) &&
         enroques.find('Q') < 4)
         {
-          cout << 99 << endl;
         res=true;
     }
     if(Turno==-1 &&
@@ -738,13 +764,15 @@ bool Tablero:: amenaza(int a){
     vector<vector<int>> jugadasPosible=jugadasPosiblesInvertida();
     bool res=false;
     for(int i=0;i<jugadasPosible.size();i++){
-        if(jugadasPosible[i][1]== a){
+        if(jugadasPosible[i][1]==a){
             res=true;
             break;
         }
     }
     return res;
 }
+
+
 
 bool Tablero:: esJaque(){
     vector<vector<int>> jugadasPosible=jugadasPosibles();
@@ -791,22 +819,6 @@ vector<vector<int>> moValidos(Tablero tablero){
     return res;
 }
 
-vector<vector<int>> Tablero::jugadasPosiblesInvertida(){
-  vector<vector<int>> res(0);
-   int i=21;
-  while(i>20 && i<99){
-        if(i%10 != 9 && i%10 != 0){
-           vector<vector<int>> a=posiblesJugadasCasilla(Estructura, -1*Turno, i);
-          int j=0;
-            while(j<a.size()){
-               res.push_back(a[j]);
-              j++;
-            }
-       }
-      i++;
-    }
-    return res;
-  }
 int Tablero:: posRey()
 {
   if (Turno == -1)
@@ -836,7 +848,7 @@ int main()
                                 7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
                                 7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
                                 7, -1, -1, -1, -1, -1, -1, -1,-1, 7,
-                                7, -4, 0, 0, 0, -6, 0, 0, 4, 7,
+                                7, -4, 0, 0, 0, -6,0, 0, -4, 7,
                                 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
                                 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}, 1,{});
 
@@ -846,8 +858,8 @@ int main()
 
     cout << jugadas_inicial.size() << endl;
 
-    //mostrarMatriz(jugadas_inicial);
-    //cout << "inicial: " << endl;
+  //  mostrarMatriz(jugadas_inicial);
+    cout << "inicial: " << endl;
     //mostrarVector(inicial.Estructura);
     cout << "posicion rey " << inicial.posRey() << endl;
     cout << inicial.esJaque() << endl;
@@ -860,20 +872,21 @@ int main()
     //cout << "posicion rey " << inicial.posRey();
     while (inicial.esJaquemate() == false)
     {
+      mostrarVector(inicial.Estructura);
+      //mostrarMatriz(inicial.jugadasPosiblesInvertida());
+      mostrarMatriz(moValidos(inicial));
+      cout << inicial.enroques << endl;
+      cout << inicial.enroqueCorto()<< endl;
+      cout << "contador  " << inicial.contador << endl;
       vector<int> jugada;
       int temp = 0;
-      mostrarVector(inicial.Estructura);
-      mostrarMatriz(moValidos(inicial));
-      cout << inicial.enroques.find('t');
       cout << "Ingrese una jugada  index salida index llegada]: ";
       for(int i=0;i<2;++i)
       {
-        cout << "papa" <<endl;
         cin >> temp;
         jugada.push_back(temp);
       }
-      cout << "gil" << endl;
       inicial.hacerMovimiento(jugada);
-    }
+      }
     return 0;
 }
